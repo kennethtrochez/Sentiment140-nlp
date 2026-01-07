@@ -1,0 +1,23 @@
+# data and artifacts
+data/
+models/
+reports/figures/
+*.csv
+*.tsv
+*.zip
+*.pkl
+*.joblib
+
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+
+# notebooks
+.ipynb_checkpoints/
+
+# os and editor
+.DS_Store
+.vscode/
