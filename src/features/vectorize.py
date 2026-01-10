@@ -12,14 +12,18 @@ from pathlib import Path
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
+import joblib
+from scipy.sparse import save_npz
 
 def main():
     root = Path(__file__).resolve().parents[2]
     processed_path = root/"data"/"processed"/"sentiment140.csv"
+    out_dir = root/"models"/"tf-idf"
+    out_dir.mkdir(parents=True, exist_ok=True)
     df = pd.read_csv(processed_path)
-    df.dropna(subset=["target", "text"])
+    df = df.dropna(subset=["target", "text"])
     #print(df.head())
-    
+
     x = df["text"]
     y= df["target"]
 
@@ -42,8 +46,22 @@ def main():
     x_train_tfidf = vectorizer.fit_transform(x_train)
     x_test_tfidf = vectorizer.transform(x_test)
 
-    print("X_train_tfidf shape:", x_train_tfidf.shape)
-    print("X_test_tfidf shape:", x_test_tfidf.shape)
+    vectorizer_path = out_dir/"tfidf_vectorizer.joblib"
+    joblib.dump(vectorizer, vectorizer_path)
+
+    x_train_path = out_dir/"x_train_tfidf.npz"
+    x_test_path = out_dir/"x_test_tfidf.npz"
+
+    save_npz(x_train_path, x_train_tfidf)
+    save_npz(x_test_path, x_test_tfidf)
+
+
+    y_train_path = out_dir/"y_train.csv"
+    y_test_path = out_dir/"y_test.csv"
+
+    y_train.to_csv(y_train_path, index=False)
+    y_test.to_csv(y_test_path, index=False)
+
 
 if __name__ == "__main__":
     main()
