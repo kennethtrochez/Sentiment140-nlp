@@ -1,6 +1,6 @@
 # data and artifacts
 /data/
-models/
+/models/
 reports/figures/
 *.csv
 *.tsv
