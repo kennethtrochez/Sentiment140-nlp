@@ -13,7 +13,7 @@ Processing:
 - Evaluates performance using accuracy and F1 score.
 
 Output:
-- models/distilbert/200k
+- models/distilbert/500k
 - Consol logs with training, validation, and test metrics
 """
 
@@ -70,7 +70,7 @@ def main():
 
     # Data Subset sizes
     TEST_N = 200000
-    TRAIN_N = 200000
+    TRAIN_N = 500000
     VAL_N = 10000
 
     # Subsample test set for faster evaluation and shuffle training data for randomness
@@ -86,7 +86,7 @@ def main():
 
     model_name = "distilbert-base-uncased"
 
-    out_dir = root/"models"/"distilbert"/"200k"
+    out_dir = root/"models"/"distilbert"/"500k"
     out_dir.mkdir(parents=True, exist_ok=True)
 
     tokenizer = AutoTokenizer.from_pretrained(model_name)
@@ -131,13 +131,17 @@ def main():
         compute_metrics=compute_metrics,
     )
 
-    trainer.train()
+    #trainer.train()
     val_metrics = trainer.evaluate()
     print("Validation metrics:", val_metrics)
     test_metrics = trainer.evaluate(eval_dataset=test_dataset)
     print("Test metrics:", test_metrics)
     print("Best checkpoint:", trainer.state.best_model_checkpoint)
 
+    final_dir = root / "models" / "distilbert" / "500k"
+    trainer.save_model(final_dir)
+    tokenizer.save_pretrained(final_dir)
+    print("Saved final model to:", final_dir)
 
 if __name__ == "__main__":
     main()

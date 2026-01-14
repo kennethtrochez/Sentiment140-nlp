@@ -25,7 +25,7 @@ def main():
     #print(df.head())
 
     x = df["text"]
-    y= df["target"]
+    y = df["target"]
 
     # Train & Test split 80/20
     x_train, x_test, y_train, y_test = train_test_split(
