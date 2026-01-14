@@ -17,7 +17,7 @@ TF-IDF emphasizes words that are more informative in relation to the tweets whil
 
 The model was trained on 80% of the dataset and evaluated on the 20% that was left out as the test set.
 
-**Results:**
+**TF-IDF + Logistic Regression 50k Results:**
 - Accuracy: 0.7917
 - F1 Score: 0.7952
 
@@ -36,6 +36,14 @@ Confusion Matrix:
 [ 30584 129416]]
 
 ## DistilBERT
-An initial run was performed on a 50k subset of the Sentiment140 dataset to verify that the transformer pipeline is working properly. This run achieved ~83% accuracy and ~82% F1 score on an unseen test set, demonstrating clear improvement over the Tf-IDF baseline. The model was then scaled to a 200k training subset with proper training/test split with a dedicated validation set. During early experimentation, the validation accuracy hit ~97%, while the test accuracy remained stable around 83%. This behavior is consistent with overfitting and validation bias, especially when training large transfromer models on short, repetitive texts such as tweets and evaluating on the same validation set multiple times during training.
-To address this, early stopping and best-checkpoint selection were added, using validation F1 score as the model selection metric. F1 was chosen over loss because it better reflects classification performance and avoids cases where avlidation loss continues to decrease without improving generalization. With early stopping enables, training consistently stopped well before completing a full epoch, with validation and test performance aligned at around 83% F1. Overall, DistilBERT provides a clear improvement over the TF-IDF & Logistic Regression baseline, while demonstrating the importance of detailed evaluation when working on weakly supervised datasets.
+An initial run was performed on a 50k subset of the Sentiment140 dataset to verify that the transformer pipeline is working properly. This run achieved ~83% accuracy and ~82% F1 score on an unseen test set, demonstrating clear improvement over the TF-IDF baseline. The parameters on this run were very basic and untuned as well as missing a validation set.
 
+After validating the pipeline, the model was ran on a 200k training subset with a dedicated 10k validation set. To keep experiements consistent accross runs, the evaluation was performed on a fixed 200k subset of the test set. Through testing it was found that chaning the maxium length from 128 to 64 tokens helped the training speed without losing too much information. 
+
+**200k Results:**
+- Validation Accuracy: 0.8480
+- Validation F1: 0.8513
+- Test Accuracy: 0.8479
+- Test F1: 0.8505
+
+The validation and test scores being nearly identical shows a great sign that the model is generalizing well. This run on the 200k subset has seen a great jump in improvement compared to the basic 50k run. This 200k run will provide a solid benchmark to use when comparing to a 500k subset run and other transformer models.
