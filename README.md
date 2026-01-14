@@ -34,3 +34,8 @@ weighted avg    0.79      0.79      0.79    320000
 Confusion Matrix:
 [[123943  36057]
 [ 30584 129416]]
+
+## DistilBERT
+An initial run was performed on a 50k subset of the Sentiment140 dataset to verify that the transformer pipeline is working properly. This run achieved ~83% accuracy and ~82% F1 score on an unseen test set, demonstrating clear improvement over the Tf-IDF baseline. The model was then scaled to a 200k training subset with proper training/test split with a dedicated validation set. During early experimentation, the validation accuracy hit ~97%, while the test accuracy remained stable around 83%. This behavior is consistent with overfitting and validation bias, especially when training large transfromer models on short, repetitive texts such as tweets and evaluating on the same validation set multiple times during training.
+To address this, early stopping and best-checkpoint selection were added, using validation F1 score as the model selection metric. F1 was chosen over loss because it better reflects classification performance and avoids cases where avlidation loss continues to decrease without improving generalization. With early stopping enables, training consistently stopped well before completing a full epoch, with validation and test performance aligned at around 83% F1. Overall, DistilBERT provides a clear improvement over the TF-IDF & Logistic Regression baseline, while demonstrating the importance of detailed evaluation when working on weakly supervised datasets.
+
