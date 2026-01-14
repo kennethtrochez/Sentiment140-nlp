@@ -9,6 +9,7 @@ This project implements an end-to-end sentiment analysis pipeline using the Sent
 
 ## Models
 - TF-IDF + Logistic Regression (baseline)
+- DistilBERT
 
 ## Baseline Model: (TF-IDF & Logistic Regression)
 As a baseline, the text is vectorized using TF-IDF (Term Frequency-Inverse Document Frequency) and is classified using a logistic regression model.
