@@ -1,0 +1,12 @@
+.venv/
+.git/
+__pycache__/
+*.pyc
+.git/
+.gitignore
+
+
+models/*
+!models/distilbert/
+models/distilbert/*
+!models/distilbert/500k/
