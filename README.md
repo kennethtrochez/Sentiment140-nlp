@@ -1,11 +1,22 @@
 # Sentiment140 NLP Pipeline
 
-This project implements an end-to-end sentiment analysis pipeline using the Sentiment140 Twitter dataset. The goal is to build and evaluate multiple models for text classification.
+## Overview
+This project implements an end-to-end sentiment analysis pipeline using the Sentiment140 Twitter dataset. The project progresses from a traditional TF-IDF + Logistic Regression baseline to a fine tuned DistilBERT transformer model. The pipeline covers data ingestion, preprocessing, feature engineering, model training, evaluation, and inference. The final DistilBERT model achieves strong generalization performance on a large subset of data as showcased on a 500k subset experiement. The model is deployed using FastAPI for real time use of any text a user can think of. The API is fully containerized with Docker to enable local deployment and personal use. This project demonstrates applied NLP modeling, performance benchmarking, and deploying a model as a usable API.
 
 ## Project Structure
-- src/data: data ingestion and preprocessing
-- src/features: feature engineering
-- src/models: model training and evaluation
+- notebooks/: analysis and experiemenation
+
+- reports/
+    - figures/: evaluation plots and visuals
+
+- src/
+    - data/: data ingestion and preprocessing
+    - features/: feature engineering
+    - models/: model training and evaluation
+    - api/: FastAPI inference service
+
+- Dockerfile: container for API deployment
+- requirements.txt: Python dependencies
 
 ## Models
 - TF-IDF + Logistic Regression (baseline)
